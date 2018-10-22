@@ -39,5 +39,6 @@ The goal here is to reimplement a version of this network that will be trained a
 - 1st, using the [dataset documentation](http://www.cs.toronto.edu/~kriz/cifar.html), you will load the data from the cifar-10-batches-py directory and preprocess it so that it can be used with the Keras framework
 - 2nd, using the [layers file documentation](https://code.google.com/archive/p/cuda-convnet/wikis/LayerParams.wiki) you will reimplement the network described by the layers-18pct.cfg and layer-params-18pct.cfg files
 - 3rd following the method described in the paper, you will perform data augmentation of the CIFAR-10 dataset to improve your results.
+- Bonus, Try ro improve the model to achieve the best possible results on the test batch
 
 
