@@ -1,6 +1,6 @@
-src/NeuralNetwork.py
-src/DataManager.py
+*.pdf
 Lib/
+cifar-10-batches-py/
 Include/
 .vscode/
 Scripts
