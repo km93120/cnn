@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+from keras.preprocessing.image import ImageDataGenerator
 
 import tensorflow as tf
 from tensorflow.keras.datasets import cifar10
@@ -19,8 +20,21 @@ class DataManager(object):
         self.train_data = train_data/255.0
         self.train_labels = train_labels
         self.eval_data = eval_data/255.0
-        self.eval_labels = eval_labels    
+        self.eval_labels = eval_labels
 
+
+    def preprocessData(self):
+
+        self.datagen = ImageDataGenerator(featurewise_center=True,
+                                           featurewise_std_normalization=True,
+                                           rotation_range=20,
+                                           width_shift_range=0.2,
+                                           height_shift_range=0.2,
+                                           horizontal_flip=True)
+
+        self.datagen.fit(self.train_data)
+
+        # https://keras.io/preprocessing/image/ data augmentation.
         """Load the data from cifar-10-batches. 
            See http://www.cs.toronto.edu/~kriz/cifar.html for instructions on 
            how to do so.

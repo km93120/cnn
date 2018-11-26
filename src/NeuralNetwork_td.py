@@ -11,58 +11,66 @@ class NeuralNetwork(object):
 
     def createModel(self):
 
-        inputLayer      = keras.layers.Flatten(input_shape=(32,32,3))
-        conv1           = keras.layers.Conv2D(32,5,activation='relu', input_shape=(32, 32,3)) 
-        pool1           = keras.layers.MaxPooling2D(3, strides= 2, data_format="channels_last")
-        pool1Activation = keras.layers.Activation('relu')
-        rnorm1          = keras.layers.BatchNormalization(axis=1)
-        conv2           = keras.layers.Conv2D(32,5,1,"same","channels_last")
-        conv2Activation = keras.layers.Activation('relu')
-        pool2           = keras.layers.AveragePooling2D(3,2)
-        rnorm2          = keras.layers.BatchNormalization(axis=1)
-        conv3           = keras.layers.Conv2D(64,5,1,"same","channels_last")
-        conv3Activation = keras.layers.Activation('relu')
-        pool3           = keras.layers.AveragePooling2D(3,2)
-        flattening      = keras.layers.Flatten(input_shape=(32,32,3))   
-        fc10            = keras.layers.LocallyConnected2D(32,5,input_shape=(32,3))
-        outputLayer     = keras.layers.Dense(10)
-        
-        
+       conv1 = keras.layers.Conv2D(filters= 32,kernel_size = 5,strides = 1, padding = "same",
+                                   data_format = 'channels_last',activation='relu', 
+                                   input_shape= (32, 32,3))
 
-        self.model = keras.Sequential([
-                
-                
-                
-            
+       pool1 = keras.layers.MaxPooling2D(pool_size=3,strides = 2,data_format = "channels_last")
+
+       pool1Activation = keras.layers.Activation('relu')
+       
+       rnorm1 = keras.layers.BatchNormalization(axis = 3)
+ 
+       conv2  = keras.layers.Conv2D(filters= 32,kernel_size= 5,strides = 1,padding = "same",
+                                    data_format = "channels_last",activation='relu');
+       
+       pool2  = keras.layers.AveragePooling2D(pool_size = (3,3),strides = 2,data_format = "channels_last")
+
+       rnorm2 = keras.layers.BatchNormalization(axis=3)
+
+       conv3  = keras.layers.Conv2D(filters= 64,kernel_size= 5,strides = 1,padding = "same",
+                                    data_format = "channels_last",activation='relu');
+       
+       pool3  = keras.layers.AveragePooling2D(pool_size = (3,3),strides = 2,data_format = "channels_last")
+
+       flattening = keras.layers.Flatten(data_format = "channels_last");
+
+       fc10  = keras.layers.Dense(10);
+
+       softmax = keras.layers.Softmax()
+       self.model = keras.Sequential([
                 conv1,
                 pool1,
                 pool1Activation,
                 rnorm1,
                 conv2,
-                conv2Activation,
                 pool2,
                 rnorm2,
                 conv3,
-                conv3Activation,
                 pool3,
                 flattening,
                 fc10,
-                outputLayer   ])
+                softmax])
 
-        self.model.compile(optimizer=keras.optimizers.Adam(),
-        loss='sparse_categorical_crossentropy',
-        metrics=['accuracy'])
+        
+
+        
+    
+
+
+
+        
 
       
 
-        """Create and compile the keras model. See layers-18pct.cfg and
-           layers-params-18pct.cfg for the network model,
-           and https://code.google.com/darchive/p/cuda-convnet/wikis/LayerParams.wiki
-           for documentation on the layer format.
-        """
+    
         
     
-    def train(self, train_data, train_labels, epochs):
+    def train(self, datagen ,train_data, train_labels, epochss):
+        
+        self.model.compile(optimizer=keras.optimizers.Adam(lr = 1.0),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
         """Train the keras model
         
         Arguments:
@@ -70,8 +78,9 @@ class NeuralNetwork(object):
             train_labels {np.array} -- The training labels
             epochs {int} -- The number of epochs to train for
         """
-
-        self.model.fit(train_data,train_labels)
+        #self.model.fit_generator(datagen.flow(train_labels, train_labels, batch_size=32),
+         #                   steps_per_epoch=len(train_data) / 32, epochs=epochss)
+        self.model.fit(train_data,train_labels,epochs = epochss,batch_size = 32)
 
         pass
 
@@ -82,6 +91,7 @@ class NeuralNetwork(object):
             eval_data {np.array} -- The evaluation images
             eval_labels {np.array} -- The labels for the evaluation images
         """
+        return self.model.evaluate(eval_data, eval_labels, batch_size=32)
         pass
 
     def test(self, test_data):
