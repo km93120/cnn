@@ -18,6 +18,7 @@ def main():
     result = nn.evaluate(dm.eval_data,dm.eval_labels)
     print(result[0])
     print(result[1])
+    print(nn.test(dm.eval_data));
 
     
 

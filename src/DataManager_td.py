@@ -25,12 +25,18 @@ class DataManager(object):
 
     def preprocessData(self):
 
-        self.datagen = ImageDataGenerator(featurewise_center=True,
-                                           featurewise_std_normalization=True,
-                                           rotation_range=20,
-                                           width_shift_range=0.2,
-                                           height_shift_range=0.2,
-                                           horizontal_flip=True)
+        self.datagen = ImageDataGenerator(
+            featurewise_center=False,  # set input mean to 0 over the dataset
+            samplewise_center=False,  # set each sample mean to 0
+            featurewise_std_normalization=False,  # divide inputs by std of the dataset
+            samplewise_std_normalization=False,  # divide each input by its std
+            zca_whitening=False,  # apply ZCA whitening
+            rotation_range=10,  # randomly rotate images in the range (degrees, 0 to 180)
+            zoom_range=0.1,  # Randomly zoom image
+            width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+            height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+            horizontal_flip=False,  # randomly flip images
+            vertical_flip=False)  # randomly flip images
 
         self.datagen.fit(self.train_data)
 
@@ -67,9 +73,9 @@ class DataManager(object):
         for i in range(0,a):
             self.train_data.append(self.unpickle("./cifar-10-batches-py/data_batch_1"))
         """
-        print(self.train_data.__len__())
+        """ print(self.train_data.__len__())
         print(self.eval_data.__len__()) 
-        print(self.eval_data[5])
+        print(self.eval_data[5])"""
 
     # keras.layers.BatchNormalization    seule normalisation disponible.
     # fc : fully connected
