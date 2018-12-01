@@ -2,6 +2,14 @@
 
 ## Prerequisites
 [Python3.5 64 bit](https://www.python.org/downloads)
+instructions to run project:
+follow instructions from [this link](https://www.pugetsystems.com/labs/hpc/The-Best-Way-to-Install-TensorFlow-with-GPU-Support-on-Windows-10-Without-Installing-CUDA-1187/) to create and activate a tensorflow-gpu environement.
+once your tf-gpu environement is activated :
+```
+git clone https://github.com/km93120/cnn.git
+cd cnn
+python main.py
+```
 
 ### Introduction
 
