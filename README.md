@@ -8,6 +8,7 @@ once your tf-gpu environement is activated :
 ```
 git clone https://github.com/km93120/cnn.git
 cd cnn
+pip install -r requirements.txt
 python main.py
 ```
 
