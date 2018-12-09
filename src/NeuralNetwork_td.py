@@ -18,7 +18,7 @@ class NeuralNetwork(object):
 
     def createModel(self):
 
-       conv1 = keras.layers.Conv2D(filters= 32,kernel_size = 5,strides = 1, padding = "same",
+       conv1 = keras.layers.Conv2D(filters= 32,kernel_size = 5,strides = 1, padding = "same", #kernel size : 3
                                    data_format = 'channels_last',activation='relu', 
                                    input_shape= (32, 32,3))
 
@@ -39,7 +39,7 @@ class NeuralNetwork(object):
 
        rnorm2 = keras.layers.BatchNormalization(axis=3)
 
-       conv3  = keras.layers.Conv2D(filters= 64,kernel_size= 3,strides = 1,padding = "same",
+       conv3  = keras.layers.Conv2D(filters= 64,kernel_size= 3,strides = 1,padding = "same",#valid
                                     data_format = "channels_last",activation='relu');
        
        pool3  = keras.layers.AveragePooling2D(pool_size = (3,3),strides = 2,data_format = "channels_last")
@@ -50,7 +50,7 @@ class NeuralNetwork(object):
 
        drop3 = keras.layers.Dropout(0.25)
 
-       fc10  = keras.layers.Dense(10,activation = 'softmax');
+       fc10  = keras.layers.Dense(10);
 
        softmax = keras.layers.Softmax()
        self.model = keras.Sequential([
@@ -68,7 +68,7 @@ class NeuralNetwork(object):
                 flattening,
                 drop3,
                 fc10,
-            #    softmax,
+                softmax,
        ])
 
         
@@ -93,7 +93,7 @@ class NeuralNetwork(object):
                                                     factor=0.5,
                                                     min_lr=0.00001)
         #optimizer = RMSprop(lr=1, rho=0.9, epsilon=1e-08, decay=0.0)
-        self.model.compile(optimizer=keras.optimizers.Adam(lr = 1),
+        self.model.compile(optimizer=keras.optimizers.Adam(lr = 0.001),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
         """Train the keras model
@@ -141,6 +141,9 @@ class NeuralNetwork(object):
         Keyword Arguments:
             saveFile {str} -- The name of the model file (default: {"model.h5"})
         """
+
+        self.model.save(saveFile);
+
         pass
 
     def loadModel(self, saveFile="model.h5"):

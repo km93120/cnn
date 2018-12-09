@@ -8,13 +8,14 @@ def main():
     #run 2:  2.3683 loss, 0.1066 acc : 0.1215 .1 epoch : lr = 0.001
     #run 3 : 2.8534     , 0.1001     : 0.1    .1 epoch : lr = 1
     #run 4 : 11.0573    , 0.0772     : 0.0763 .3 epochs: lr = 1 : batch_size = 32
-    #run 5 :
+    #run 5 : 0. 805      ,0.7291               30 epochs    lr = 0.001 batch size = 32
 
     dm = DataManager()
     dm.preprocessData()
     nn = NeuralNetwork()
     nn.createModel()
-    nn.train(dm.datagen,dm.train_data,dm.train_labels,10);
+    nn.train(dm.datagen,dm.train_data,dm.train_labels,30);
+    nn.saveModel("best.h5")
     result = nn.evaluate(dm.eval_data,dm.eval_labels)
     print(result[0])
     print(result[1])
